@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-const arrNames = [
+const arrUsers = [
     {
         id: 12,
         name: "Paul",
@@ -30,8 +30,8 @@ app.get('/names', (req, res) => {
     // => Paul et Pierre et Mathilde !
     let sentence = ""
 
-    arrNames.forEach(name => {
-        sentence += name + " "
+    arrUsers.forEach(obj => {
+        sentence += obj.name + " "
     })
 
     sentence += "!"
@@ -39,9 +39,21 @@ app.get('/names', (req, res) => {
 })
 
 app.get('/names/:id', (req, res) => {
-    console.log(parseInt(req.params.id))
+    // console.log(parseInt(req.params.id))
     // Implémenter le test pour sélectionner dans le tableau l'objet dont l'id correspond à l'id passé en paramètre d'url
-    res.send(arrNames[req.params.id])
+    let result = "not found";
+    const urlId = parseInt(req.params.id)
+    //... trouver le bon objet dans le tableau
+
+    for (let i = 0; i < arrUsers.length; i++) {
+        const element = arrUsers[i];
+        if (element.id === urlId) {
+            result = arrUsers[i].name
+            break;
+        }
+    }
+
+    res.send(result)
 })
 
 app.listen(port, () => {
