@@ -41,18 +41,24 @@ app.get('/names', (req, res) => {
 app.get('/names/:id', (req, res) => {
     // console.log(parseInt(req.params.id))
     // Implémenter le test pour sélectionner dans le tableau l'objet dont l'id correspond à l'id passé en paramètre d'url
-    let result = "not found";
     const urlId = parseInt(req.params.id)
     //... trouver le bon objet dans le tableau
 
-    for (let i = 0; i < arrUsers.length; i++) {
-        const element = arrUsers[i];
-        if (element.id === urlId) {
-            result = arrUsers[i].name
-            break;
-        }
+    // let result = "not found";
+    // for (let i = 0; i < arrUsers.length; i++) {
+    //     const element = arrUsers[i];
+    //     if (element.id === urlId) {
+    //         result = arrUsers[i].name
+    //         break;
+    //     }
+    // }
+    let result = arrUsers.find(el => el.id === urlId)
+    if (!result) {
+        result = "not found"
+    } else {
+        result = result.name
     }
-
+    // on peut résumer le test précédent en une condition ternaire
     res.send(result)
 })
 
