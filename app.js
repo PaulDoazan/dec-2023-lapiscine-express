@@ -3,6 +3,8 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+const mockCoworkings = require('./mock-coworkings')
+
 const arrUsers = [
     {
         id: 12,
@@ -20,9 +22,36 @@ const arrUsers = [
     }
 ]
 
+const logger = (req, res, next) => {
+    const now = new Date()
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    console.log(`${hours}h${minutes} - ${req.url} DANS LOGGER`)
+
+    next()
+}
+
+app.use(logger)
+
 app.get('/', (req, res) => {
     res.send('Hello World !')
 })
+
+app.get('/api/coworkings', (req, res) => {
+    // Afficher la phrase : Il y a ... coworkings dans la liste. 
+    res.send(`Il y a ${mockCoworkings.length} coworkings dans la liste.`)
+})
+
+app.get('/api/coworkings/:id', (req, res) => {
+    let result = mockCoworkings.find(el => el.id === parseInt(req.params.id))
+
+    if (!result) {
+        result = `Aucun élément ne correspond à l'id n°${req.params.id}`
+    }
+    res.send(result)
+})
+
+// création d'un nouvel endpoint qui permettra de récupérer un coworking en fonction de l'id passé en paramètre
 
 app.get('/names', (req, res) => {
     // Une requête ne peut renvoyer qu'une seule et unique réponse
@@ -53,11 +82,13 @@ app.get('/names/:id', (req, res) => {
     //     }
     // }
     let result = arrUsers.find(el => el.id === urlId)
-    if (!result) {
-        result = "not found"
-    } else {
-        result = result.name
-    }
+    // if (!result) {
+    //     result = "not found"
+    // } else {
+    //     result = result.name
+    // }
+    result = result ? result.name : "not found"
+
     // on peut résumer le test précédent en une condition ternaire
     res.send(result)
 })
