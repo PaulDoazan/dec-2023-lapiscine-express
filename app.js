@@ -45,6 +45,16 @@ app.post('/api/coworkings/', (req, res) => {
     res.json(result)
 })
 
+
+// implémenter le endpoint put coworkings avec :id, ainsi que la requête correspondante dans Postman
+app.put('/api/coworkings/:id', (req, res) => {
+    const coworking = mockCoworkings.find((el) => el.id === parseInt(req.params.id))
+    coworking.superficy = req.body.superficy
+
+    const result = { message: 'Coworking modifié', data: coworking }
+    res.json(result)
+})
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
