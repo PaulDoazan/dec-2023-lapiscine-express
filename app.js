@@ -3,7 +3,7 @@ const morgan = require('morgan')
 const app = express()
 const port = 3000
 
-const mockCoworkings = require('./mock-coworkings')
+let mockCoworkings = require('./mock-coworkings')
 
 // middleware qui me permet d'interpréter le corps de ma requête (req.body) en format json
 app.use(express.json())
@@ -49,9 +49,29 @@ app.post('/api/coworkings/', (req, res) => {
 // implémenter le endpoint put coworkings avec :id, ainsi que la requête correspondante dans Postman
 app.put('/api/coworkings/:id', (req, res) => {
     const coworking = mockCoworkings.find((el) => el.id === parseInt(req.params.id))
-    coworking.superficy = req.body.superficy
 
-    const result = { message: 'Coworking modifié', data: coworking }
+    let result;
+    if (coworking) {
+        coworking.superficy = req.body.superficy
+        result = { message: 'Coworking modifié', data: coworking }
+    } else {
+        result = { message: `Le coworking n'existe pas`, data: {} }
+    }
+
+    res.json(result)
+})
+
+app.delete('/api/coworkings/:id', (req, res) => {
+    const coworking = mockCoworkings.find((el) => el.id === parseInt(req.params.id))
+
+    let result;
+    if (coworking) {
+        mockCoworkings = mockCoworkings.filter(el => el.id !== coworking.id)
+        result = { message: 'Coworking supprimé', data: coworking }
+    } else {
+        result = { message: `Le coworking n'existe pas`, data: {} }
+    }
+
     res.json(result)
 })
 
