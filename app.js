@@ -10,12 +10,12 @@ app.use(express.json())
 app.use(morgan('dev'))
 
 app.get('/', (req, res) => {
-    res.send('Hello World !')
+    res.json('Hello World !')
 })
 
 app.get('/api/coworkings', (req, res) => {
     // Afficher la phrase : Il y a ... coworkings dans la liste. 
-    res.send(mockCoworkings)
+    res.json(mockCoworkings)
 })
 
 app.get('/api/coworkings/:id', (req, res) => {
@@ -24,7 +24,7 @@ app.get('/api/coworkings/:id', (req, res) => {
     if (!result) {
         result = `Aucun élément ne correspond à l'id n°${req.params.id}`
     }
-    res.send(result)
+    res.json(result)
 })
 
 // implémenter le endpoint post qui renvoie une réposne "post fonctionne"
@@ -35,10 +35,14 @@ app.post('/api/coworkings/', (req, res) => {
     const newId = mockCoworkings[mockCoworkings.length - 1].id + 1
     // let coworking = {id: newId, superficy : req.body.superficy, capacity : req.body.capacity, name: req.body.name}
 
+    // ... SPREAD OPERATOR
     let coworking = { id: newId, ...req.body }
-
     mockCoworkings.push(coworking)
-    res.send('Tout fonctionne dans le endpoint POST')
+
+    // On renvoie un objet qui contient les proriétés message et data
+    // message: `Le coworking a bien été ajouté`
+    const result = { message: `Le coworking a bien été ajouté`, data: coworking }
+    res.json(result)
 })
 
 app.listen(port, () => {
