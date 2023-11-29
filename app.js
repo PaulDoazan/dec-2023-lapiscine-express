@@ -1,19 +1,13 @@
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
 const port = 3000
 
 const mockCoworkings = require('./mock-coworkings')
 
-const logger = (req, res, next) => {
-    const now = new Date()
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    console.log(`${hours}h${minutes < 10 ? '0' + minutes : minutes} - ${req.url} DANS LOGGER`)
-
-    next()
-}
-
-app.use(logger)
+// middleware qui me permet d'interpréter le corps de ma requête (req.body) en format json
+app.use(express.json())
+app.use(morgan('dev'))
 
 app.get('/', (req, res) => {
     res.send('Hello World !')
@@ -21,7 +15,7 @@ app.get('/', (req, res) => {
 
 app.get('/api/coworkings', (req, res) => {
     // Afficher la phrase : Il y a ... coworkings dans la liste. 
-    res.send(`Il y a ${mockCoworkings.length} coworkings dans la liste.`)
+    res.send(mockCoworkings)
 })
 
 app.get('/api/coworkings/:id', (req, res) => {
@@ -31,6 +25,20 @@ app.get('/api/coworkings/:id', (req, res) => {
         result = `Aucun élément ne correspond à l'id n°${req.params.id}`
     }
     res.send(result)
+})
+
+// implémenter le endpoint post qui renvoie une réposne "post fonctionne"
+app.post('/api/coworkings/', (req, res) => {
+    // Ajouter le coworking dans le tableau, en automatisant la génération d'un id. On récupère le dernier élément du tableau et on ajoute +1 à son id.
+    // let coworking = req.body
+
+    const newId = mockCoworkings[mockCoworkings.length - 1].id + 1
+    // let coworking = {id: newId, superficy : req.body.superficy, capacity : req.body.capacity, name: req.body.name}
+
+    let coworking = { id: newId, ...req.body }
+
+    mockCoworkings.push(coworking)
+    res.send('Tout fonctionne dans le endpoint POST')
 })
 
 app.listen(port, () => {
