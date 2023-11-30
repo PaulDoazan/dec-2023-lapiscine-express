@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const { Coworking } = require('../db/sequelizeSetup')
 let mockCoworkings = require('../mock-coworkings')
 
 router
