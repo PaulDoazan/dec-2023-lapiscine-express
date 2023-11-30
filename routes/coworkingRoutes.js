@@ -9,10 +9,18 @@ router
         res.json(mockCoworkings)
     })
     .post((req, res) => {
-        const newId = mockCoworkings[mockCoworkings.length - 1].id + 1
-        let coworking = { id: newId, ...req.body }
-        mockCoworkings.push(coworking)
-        const result = { message: `Le coworking a bien été ajouté`, data: coworking }
+        // const newId = mockCoworkings[mockCoworkings.length - 1].id + 1
+        // let coworking = { id: newId, ...req.body }
+        // mockCoworkings.push(coworking)
+        Coworking.create({
+            name: "Oasis Coworking",
+            price: { "hour": 4, "day": 21, "month": 100 },
+            address: { "number": "68bis", "street": "avenue Jean Jaurès", "postCode": 33150, "city": "Cenon" },
+            superficy: 200,
+            capacity: 27,
+        })
+
+        const result = { message: `Le coworking a bien été ajouté` }
         res.json(result)
     })
 
