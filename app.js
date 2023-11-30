@@ -36,6 +36,7 @@ app.post('/api/coworkings/', (req, res) => {
     // let coworking = {id: newId, superficy : req.body.superficy, capacity : req.body.capacity, name: req.body.name}
 
     // ... SPREAD OPERATOR
+
     let coworking = { id: newId, ...req.body }
     mockCoworkings.push(coworking)
 
@@ -48,12 +49,15 @@ app.post('/api/coworkings/', (req, res) => {
 
 // implémenter le endpoint put coworkings avec :id, ainsi que la requête correspondante dans Postman
 app.put('/api/coworkings/:id', (req, res) => {
-    const coworking = mockCoworkings.find((el) => el.id === parseInt(req.params.id))
+    let coworking = mockCoworkings.find((el) => el.id === parseInt(req.params.id))
 
     let result;
     if (coworking) {
-        coworking.superficy = req.body.superficy
-        result = { message: 'Coworking modifié', data: coworking }
+        // coworking.superficy = req.body.superficy
+        const newCoworking = { ...coworking, ...req.body }
+        const index = mockCoworkings.findIndex(el => el.id === parseInt(req.params.id))
+        mockCoworkings[index] = newCoworking
+        result = { message: 'Coworking modifié', data: newCoworking }
     } else {
         result = { message: `Le coworking n'existe pas`, data: {} }
     }
