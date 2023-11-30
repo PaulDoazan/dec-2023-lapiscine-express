@@ -49,6 +49,7 @@ app.post('/api/coworkings/', (req, res) => {
 
 // implémenter le endpoint put coworkings avec :id, ainsi que la requête correspondante dans Postman
 app.put('/api/coworkings/:id', (req, res) => {
+    // la méthode find renvoie un nouvel objet, clone de celui contenu dans le tableau
     let coworking = mockCoworkings.find((el) => el.id === parseInt(req.params.id))
 
     let result;

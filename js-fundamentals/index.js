@@ -38,3 +38,21 @@ arr2.push('oiqshdiofgq')
 
 
 console.log(arr1, arr2)
+
+let arr3 = [2, 3, 4, 5]
+// let arr4 = arr3.filter(el => el >= 4)
+
+// arr3.push(9)
+
+let arr4 = arr3.map(el => {
+    return el += 2
+})
+
+arr3.forEach(el => {
+    el -= 1
+})
+
+for (let index = 0; index < arr3.length; index++) {
+    arr3[index] = arr3[index] *= 10
+}
+console.log(arr3, arr4);
