@@ -54,6 +54,9 @@ app.put('/api/coworkings/:id', (req, res) => {
     let result;
     if (coworking) {
         // coworking.superficy = req.body.superficy
+
+        // DISTINCTION IMPORTANTE entre l'id des objets contenus dans le tableau, 
+        // et l'index de ces objets dans le tableau, par exemple : Oasis Coworking a pour .id 12 et pour index dans le tableau [2]
         const newCoworking = { ...coworking, ...req.body }
         const index = mockCoworkings.findIndex(el => el.id === parseInt(req.params.id))
         mockCoworkings[index] = newCoworking
