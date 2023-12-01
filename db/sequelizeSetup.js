@@ -15,10 +15,9 @@ const Coworking = CoworkingModel(sequelize, DataTypes)
 // D. On synchronise la BDD avec les models défini dans notre API
 sequelize.sync({ force: true })
 
-
 sequelize.authenticate()
     .then(() => console.log('La connexion à la base de données a bien été établie.'))
     .catch(error => console.error(`Impossible de se connecter à la base de données ${error}`))
 
 
-module.exports = { sequelize, Coworking }
+module.exports = { Coworking }
