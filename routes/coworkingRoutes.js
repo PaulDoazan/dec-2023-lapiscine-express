@@ -6,7 +6,13 @@ let mockCoworkings = require('../mock-coworkings')
 router
     .route('/')
     .get((req, res) => {
-        res.json(mockCoworkings)
+        Coworking.findAll()
+            .then((results) => {
+                res.json(results)
+            })
+            .catch(error => {
+                res.json(error.message)
+            })
     })
     .post((req, res) => {
         // const newId = mockCoworkings[mockCoworkings.length - 1].id + 1
