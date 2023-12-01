@@ -21,7 +21,6 @@ sequelize.sync({ force: true })
             const newCoworking = { ...element }
             Coworking.create(newCoworking)
         })
-
     })
     .catch(error => {
 
