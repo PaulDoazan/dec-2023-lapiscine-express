@@ -14,6 +14,19 @@ const Coworking = CoworkingModel(sequelize, DataTypes)
 
 // D. On synchronise la BDD avec les models défini dans notre API
 sequelize.sync({ force: true })
+    .then(() => {
+        Coworking.create({
+            name: "Anticafé",
+            price: { "hour": 5, "day": 23, "month": 235 },
+            address: { "number": "11", "street": "rue Duffour Dubergier", "postCode": 33000, "city": "Bordeaux" },
+            superficy: 95,
+            capacity: 45,
+        })
+    })
+    .catch(error => {
+
+    })
+
 
 sequelize.authenticate()
     .then(() => console.log('La connexion à la base de données a bien été établie.'))

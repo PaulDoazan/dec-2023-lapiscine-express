@@ -13,6 +13,7 @@ router
             .catch(error => {
                 res.json(error.message)
             })
+        // PAUL; FRANCK VA SE FAIRE TESTER ET IL REVIENT APRES LE TEST TKT. IL A DIT BISOUS
     })
     .post((req, res) => {
         // const newId = mockCoworkings[mockCoworkings.length - 1].id + 1
