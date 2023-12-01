@@ -1,3 +1,5 @@
+// Les require de ce fichier example.js sont exécutés dans app.js
+
 let myObj = {
     product: "Smartphone",
     price: 150

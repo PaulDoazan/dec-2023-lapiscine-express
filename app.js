@@ -27,7 +27,7 @@ app.listen(port, () => {
 // console.log(monImportation)
 
 // const monImportation = require('./examples')
-// console.log(monImportation.myObj, monImportation.myObj2, monImportation.arr)
+// console.log(monImportation.myObj, monImportation.myObj2, monImportation.)
 
 const { add, substract } = require('./examples')
 substract(5, 2)
