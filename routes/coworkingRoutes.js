@@ -32,7 +32,6 @@ router
             })
 
         // const result = { message: `Le coworking a bien été ajouté`, data: newCoworking }
-
     })
 
 router
