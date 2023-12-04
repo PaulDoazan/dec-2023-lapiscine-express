@@ -1,11 +1,13 @@
 const express = require('express')
 const router = express.Router()
+// const { Op } = require('sequelize')
 const { Coworking } = require('../db/sequelizeSetup')
 let mockCoworkings = require('../mock-coworkings')
 
 router
     .route('/')
     .get((req, res) => {
+        console.log(req.query);
         Coworking.findAll()
             .then((results) => {
                 res.json(results)
@@ -30,27 +32,33 @@ router
 router
     .route('/:id')
     .get((req, res) => {
-        let result = mockCoworkings.find(el => el.id === parseInt(req.params.id))
-
-        if (!result) {
-            result = `Aucun élément ne correspond à l'id n°${req.params.id}`
-        }
-        res.json(result)
+        Coworking.findByPk(parseInt(req.params.id))
+            .then((result) => {
+                console.log(result)
+                if (result) {
+                    res.json({ message: 'Un coworking a été trouvé.', data: result })
+                } else {
+                    res.json({ message: `Aucun coworking n'a été trouvé.` })
+                }
+            })
+            .catch((error) => {
+                res.json({ message: 'Une erreur est survenue.', data: error.message })
+            })
     })
     .put((req, res) => {
-        let coworking = mockCoworkings.find((el) => el.id === parseInt(req.params.id))
+        // let coworking = mockCoworkings.find((el) => el.id === parseInt(req.params.id))
 
-        let result;
-        if (coworking) {
-            const newCoworking = { ...coworking, ...req.body }
-            const index = mockCoworkings.findIndex(el => el.id === parseInt(req.params.id))
-            mockCoworkings[index] = newCoworking
-            result = { message: 'Coworking modifié', data: newCoworking }
-        } else {
-            result = { message: `Le coworking n'existe pas`, data: {} }
-        }
+        // let result;
+        // if (coworking) {
+        //     const newCoworking = { ...coworking, ...req.body }
+        //     const index = mockCoworkings.findIndex(el => el.id === parseInt(req.params.id))
+        //     mockCoworkings[index] = newCoworking
+        //     result = { message: 'Coworking modifié', data: newCoworking }
+        // } else {
+        //     result = { message: `Le coworking n'existe pas`, data: {} }
+        // }
 
-        res.json(result)
+        // res.json(result)
     })
     .delete((req, res) => {
         const coworking = mockCoworkings.find((el) => el.id === parseInt(req.params.id))
