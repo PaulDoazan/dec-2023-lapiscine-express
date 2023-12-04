@@ -14,7 +14,6 @@ const sequelize = new Sequelize('bordeaux_coworkings', 'root', '', {
 const Coworking = CoworkingModel(sequelize, DataTypes)
 
 // D. On synchronise la BDD avec les models défini dans notre API
-
 sequelize.sync({ force: true })
     .then(() => {
         mockCoworkings.forEach((element) => {
@@ -23,7 +22,7 @@ sequelize.sync({ force: true })
         })
     })
     .catch(error => {
-
+        console.log(error)
     })
 
 

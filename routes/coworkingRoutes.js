@@ -13,21 +13,9 @@ router
             .catch(error => {
                 res.json(error.message)
             })
-        // PAUL; FRANCK VA SE FAIRE TESTER ET IL REVIENT APRES LE TEST TKT. IL A DIT BISOUS
     })
     .post((req, res) => {
-        // const newId = mockCoworkings[mockCoworkings.length - 1].id + 1
-        // let coworking = { id: newId, ...req.body }
-        // mockCoworkings.push(coworking)
         const newCoworking = { ...req.body }
-        // console.log(newCoworking)
-        // Coworking.create({
-        //     name: req.body.name,
-        //     price: req.body.price,
-        //     address: req.body.address,
-        //     superficy: req.body.superficy,
-        //     capacity: req.body.capacity,
-        // })
 
         Coworking.create(newCoworking)
             .then((coworking) => {
@@ -37,8 +25,6 @@ router
             .catch((error) => {
                 res.json({ message: `Le coworking n'a pas pu être créé`, data: error.message })
             })
-
-        // const result = { message: `Le coworking a bien été ajouté`, data: newCoworking }
     })
 
 router
