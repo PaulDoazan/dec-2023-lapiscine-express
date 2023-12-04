@@ -50,8 +50,15 @@ router
             }
         })
             .then((result) => {
+                // La valeur result retournée par la méthode update() est le nombre de lignes modifiées dans la table Coworkings
                 if (result > 0) {
-                    res.json({ message: 'Le coworking a bien été mis à jour.', data: result })
+                    Coworking.findByPk(req.params.id)
+                        .then((coworking) => {
+                            res.json({ message: 'Le coworking a bien été mis à jour.', data: coworking })
+                        })
+                        .catch(error => {
+                            res.json({ message: 'Une erreur est survenue.', data: error.message })
+                        })
                 } else {
                     res.json({ message: `Aucun coworking n'a été mis à jour.` })
                 }
