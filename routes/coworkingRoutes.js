@@ -6,7 +6,6 @@ const { Coworking } = require('../db/sequelizeSetup')
 router
     .route('/')
     .get((req, res) => {
-        console.log(req.query);
         Coworking.findAll()
             .then((results) => {
                 res.json(results)
