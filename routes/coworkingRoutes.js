@@ -31,9 +31,8 @@ router
 router
     .route('/:id')
     .get((req, res) => {
-        Coworking.findByPk(parseInt(req.params.id))
+        Coworking.findByPk((parseInt(req.params.id)))
             .then((result) => {
-                console.log(result)
                 if (result) {
                     res.json({ message: 'Un coworking a été trouvé.', data: result })
                 } else {
@@ -62,12 +61,28 @@ router
             })
     })
     .delete((req, res) => {
-        Coworking.destroy({ where: { id: req.params.id } })
-            .then((result) => {
-                res.json({ mesage: `Le coworking a bien été supprimé.`, data: result })
+        // A. On vérifie que l'id passé en req.params.id renvoie bien une ligne de notre table.
+        Coworking.findByPk(req.params.id)
+            .then((coworking) => {
+                // B. Si un coworking correspond à l'id alors on exécute la méthode destroy()
+                if (coworking) {
+                    Coworking.destroy({ where: { id: req.params.id } })
+                        // C. Si le coworking est bien supprimé, on affiche un message avec comme data le coworking récupéré dans le .findByPk()
+                        .then(() => {
+                            res.json({ mesage: `Le coworking a bien été supprimé.`, data: coworking })
+                        })
+                        // D. Si la suppression a échoué, on retourne une réponse à POSTMAN
+                        .catch((error) => {
+                            res.json({ mesage: `La suppression a échoué.`, data: error.message })
+                        })
+                } else {
+                    // B Si aucun coworking ne correspond à l'id alors on retourne une réponse à POSTMAN
+                    res.json({ mesage: `Aucun coworking trouvé.` })
+                }
             })
             .catch((error) => {
-                res.json({ mesage: `La suppression a échoué.`, data: error.message })
+                // E. Si une erreur est survenue dès le findByPk, on retourne une réponse à POSTMAN
+                res.json({ mesage: `La requête n'a pas aboutie.` })
             })
     })
 
