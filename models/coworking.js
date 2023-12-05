@@ -4,7 +4,16 @@ module.exports = (sequelize, DataTypes) => {
         // Model attributes are defined here
         name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: {
+                msg: "Le nom est déjà pris."
+            },
+            validate: {
+                len: {
+                    msg: "Le nom doit avoir au moins 2 caractères.",
+                    args: [2]
+                }
+            },
         },
         price: {
             type: DataTypes.JSON
@@ -13,10 +22,20 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.JSON
         },
         superficy: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            validate: {
+                isInt: {
+                    msg: "La superficie doit être un entier."
+                }
+            }
         },
         capacity: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            validate: {
+                isInt: {
+                    msg: "La superficie doit être un entier."
+                }
+            }
         }
     }
     );
