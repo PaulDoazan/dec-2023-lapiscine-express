@@ -10,13 +10,19 @@ module.exports = (sequelize, DataTypes) => {
             },
             validate: {
                 len: {
-                    msg: "Le nom doit avoir au moins 2 caractères.",
-                    args: [2]
+                    msg: "Le nom doit avoir un nombre de caractères compris entre 2 et 50.",
+                    args: [2, 10]
                 }
             },
         },
+        // custom validator : au moins un des 3 prix doit être renseigné par le client
         price: {
-            type: DataTypes.JSON
+            type: DataTypes.JSON,
+            // customValidator(value) {
+            //     if (value === null && this.age !== 10) {
+            //         throw new Error("name can't be null unless age is 10");
+            //     }
+            // }
         },
         address: {
             type: DataTypes.JSON
