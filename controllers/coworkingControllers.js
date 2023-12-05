@@ -10,4 +10,4 @@ const findAllCoworkings = (req, res) => {
         })
 }
 
-module.exports = { findAllCoworkings }
+module.exports = { findAllCoworkings, findCoworkingByPk }
