@@ -1,5 +1,6 @@
 // B. On importe le gabarit du Model Coworking défini dans le fichier ./models/coworking'
-const CoworkingModel = require('../models/coworking')
+const CoworkingModel = require('../models/coworkingModel')
+const UserModel = require('../models/userModel')
 const { Sequelize, DataTypes } = require('sequelize');
 const mockCoworkings = require('../mock-coworkings')
 
@@ -12,6 +13,7 @@ const sequelize = new Sequelize('bordeaux_coworkings', 'root', '', {
 
 // C. On instancie un Model qui permettra d'interpréter le Javascript avec la Table SQL correspondante
 const Coworking = CoworkingModel(sequelize, DataTypes)
+const User = UserModel(sequelize, DataTypes)
 // const User = UserModel(sequelize, DataTypes)
 
 // D. On synchronise la BDD avec les models défini dans notre API
@@ -47,4 +49,4 @@ sequelize.authenticate()
     .catch(error => console.error(`Impossible de se connecter à la base de données ${error}`))
 
 
-module.exports = { Coworking }
+module.exports = { Coworking, User }

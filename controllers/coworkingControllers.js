@@ -30,8 +30,7 @@ const createCoworking = (req, res) => {
 
     Coworking.create(newCoworking)
         .then((coworking) => {
-            res.json({ message: 'Le coworking a bien été créé', data: coworking })
-            console.log(coworking)
+            res.status(201).json({ message: 'Le coworking a bien été créé', data: coworking })
         })
         .catch((error) => {
             res.status(500).json({ message: `Le coworking n'a pas pu être créé`, data: error.message })
@@ -44,7 +43,7 @@ const updateCoworking = (req, res) => {
             if (result) {
                 result.update(req.body)
                     .then(() => {
-                        res.json({ message: 'Le coworking a bien été mis à jour.', data: result })
+                        res.status(201).json({ message: 'Le coworking a bien été mis à jour.', data: result })
                     })
                     .catch(error => {
                         res.status(500).json({ message: 'La mise à jour a échoué.', data: error.message })
