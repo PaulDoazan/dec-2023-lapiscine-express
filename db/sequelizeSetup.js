@@ -3,6 +3,7 @@ const CoworkingModel = require('../models/coworkingModel')
 const UserModel = require('../models/userModel')
 const { Sequelize, DataTypes } = require('sequelize');
 const mockCoworkings = require('../mock-coworkings')
+const mockUsers = require('../mock-users')
 
 // A. On créé une instance de bdd qui communique avec Xampp 
 const sequelize = new Sequelize('bordeaux_coworkings', 'root', '', {
@@ -28,16 +29,13 @@ sequelize.sync({ force: true })
                 })
         })
 
-        // User.create({username: 'pauldoazan', password: 'mdp'})
-        // .then(() => { })
-        // .catch((error) => {
-        //     console.log(error.message)
-        // })
-        // User.create({username: 'amandinedupont', password: 'mdp'})
-        // .then(() => { })
-        // .catch((error) => {
-        //     console.log(error.message)
-        // })
+        mockUsers.forEach(user => {
+            User.create(user)
+                .then(() => { })
+                .catch((error) => {
+                    console.log(error.message)
+                })
+        })
     })
     .catch(error => {
         console.log(error)
