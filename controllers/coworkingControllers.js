@@ -33,6 +33,9 @@ const createCoworking = (req, res) => {
             res.status(201).json({ message: 'Le coworking a bien été créé', data: coworking })
         })
         .catch((error) => {
+            if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
+                return res.status(400).json({ message: error.message })
+            }
             res.status(500).json({ message: `Le coworking n'a pas pu être créé`, data: error.message })
         })
 }
@@ -50,6 +53,9 @@ const updateCoworking = (req, res) => {
             }
         })
         .catch(error => {
+            if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
+                return res.status(400).json({ message: error.message })
+            }
             res.status(500).json({ message: 'Une erreur est survenue.', data: error.message })
         })
 }

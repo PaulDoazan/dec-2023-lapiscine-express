@@ -1,4 +1,5 @@
 const { User } = require('../db/sequelizeSetup')
+const { UniqueConstraintError, ValidationError } = require('sequelize')
 
 const findAllUsers = (req, res) => {
     User.findAll()
@@ -32,6 +33,9 @@ const createUser = (req, res) => {
             res.status(201).json({ message: `L'utilisateur a bien été créé`, data: User })
         })
         .catch((error) => {
+            if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
+                return res.status(400).json({ message: error.message })
+            }
             res.status(500).json({ message: `L'utilisateur n'a pas pu être créé`, data: error.message })
         })
 }
@@ -49,6 +53,9 @@ const updateUser = (req, res) => {
             }
         })
         .catch(error => {
+            if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
+                return res.status(400).json({ message: error.message })
+            }
             res.status(500).json({ message: 'Une erreur est survenue.', data: error.message })
         })
 }
