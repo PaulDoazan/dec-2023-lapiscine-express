@@ -36,4 +36,4 @@ sequelize.authenticate()
     .catch(error => console.error(`Impossible de se connecter à la base de données ${error}`))
 
 
-module.exports = { Coworking, User }
+module.exports = { Coworking, User, Role }
