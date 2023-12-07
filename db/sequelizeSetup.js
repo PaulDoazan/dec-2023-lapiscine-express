@@ -1,5 +1,6 @@
 const CoworkingModel = require('../models/coworkingModel')
 const UserModel = require('../models/userModel')
+const RoleModel = require('../models/roleModel')
 const { Sequelize, DataTypes } = require('sequelize');
 const setDataSample = require('./setDataSample')
 
@@ -11,10 +12,19 @@ const sequelize = new Sequelize('bordeaux_coworkings', 'root', '', {
 
 const Coworking = CoworkingModel(sequelize, DataTypes)
 const User = UserModel(sequelize, DataTypes)
+const Role = RoleModel(sequelize, DataTypes)
+
+Role.hasMany(User)
+User.belongsTo(Role)
+
+User.hasMany(Coworking)
+Coworking.belongsTo(User)
+
+// Ecrire la relation entre Coworking et User
 
 sequelize.sync({ force: true })
     .then(() => {
-        setDataSample(Coworking, User)
+        setDataSample(Coworking, User, Role)
     })
     .catch(error => {
         console.log(error)
