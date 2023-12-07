@@ -2,6 +2,7 @@
 const { UniqueConstraintError, ValidationError } = require('sequelize')
 const { Coworking } = require('../db/sequelizeSetup')
 const jwt = require('jsonwebtoken')
+const SECRET_KEY = require('../configs/tokenData')
 
 const findAllCoworkings = (req, res) => {
     Coworking.findAll()
@@ -41,7 +42,7 @@ const createCoworking = (req, res) => {
     if (token) {
         try {
             // D. On décode le token à l'aide de la même clé secrète qui a servi à générer le token
-            const decoded = jwt.verify(token, 'secret_key_@_12_M');
+            const decoded = jwt.verify(token, SECRET_KEY);
             console.log(decoded);
         } catch (error) {
             // E. La vérification a lévé une erreur, le return met fin au controller, donc pas de création de Coworking

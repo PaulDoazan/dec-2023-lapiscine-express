@@ -1,6 +1,7 @@
 const { User } = require('../db/sequelizeSetup')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const SECRET_KEY = require('../configs/tokenData')
 
 const login = (req, res) => {
     // A. On vérifie que l'utilisateur qui tente de se connecter existe bel et bien dans notre BDD
@@ -22,7 +23,7 @@ const login = (req, res) => {
                     // E. On génère un token qui servira à vérifier dans chaque endpoint où ce sera nécessaire si l'utilisateur peut consommer la ressource. Dans l'état actuel, le token est utilisé dans le POST COWORKINGS
                     const token = jwt.sign({
                         data: result.username
-                    }, 'secret_key_@_12_M', { expiresIn: '1h' });
+                    }, SECRET_KEY, { expiresIn: '1h' });
 
                     res.json({ message: `Login réussi`, data: token })
                 })
