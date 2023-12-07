@@ -42,12 +42,17 @@ const protect = (req, res, next) => {
     if (token) {
         try {
             const decoded = jwt.verify(token, SECRET_KEY);
-            console.log(decoded);
+            req.username = decoded.data
             next()
         } catch (error) {
             return res.status(403).json({ message: `Le token n'est pas valide.` })
         }
     }
+}
+
+// implémenter le middleware pour restreindre l'accès aux utilisateurs admin
+const restrict = (req, res, next) => {
+
 }
 
 module.exports = { login, protect }
