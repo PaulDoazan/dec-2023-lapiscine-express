@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { findAllCoworkings, findCoworkingByPk, createCoworking, updateCoworking, deleteCoworking } = require('../controllers/coworkingControllers')
-const { protect } = require('../controllers/authControllers')
+const { protect, restrictToOwnUser } = require('../controllers/authControllers')
 
 router
     .route('/')
@@ -11,8 +11,7 @@ router
 router
     .route('/:id')
     .get(findCoworkingByPk)
-    .put(protect, updateCoworking)
-    .delete(protect, deleteCoworking)
+    .put(protect, restrictToOwnUser, updateCoworking)
+    .delete(protect, restrictToOwnUser, deleteCoworking)
 
-// restrictToOwnAuthor
 module.exports = router

@@ -10,9 +10,9 @@ const sequelize = new Sequelize('bordeaux_coworkings', 'root', '', {
     logging: false
 });
 
-const Coworking = CoworkingModel(sequelize, DataTypes)
-const User = UserModel(sequelize, DataTypes)
 const Role = RoleModel(sequelize, DataTypes)
+const User = UserModel(sequelize, DataTypes)
+const Coworking = CoworkingModel(sequelize, DataTypes)
 
 Role.hasMany(User)
 User.belongsTo(Role)
@@ -22,7 +22,7 @@ Coworking.belongsTo(User)
 
 sequelize.sync({ force: true })
     .then(() => {
-        setCoworkings(Coworking)
+        // setCoworkings(Coworking)
         setUsers(User)
         setRoles(Role)
     })
