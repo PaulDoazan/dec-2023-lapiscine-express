@@ -89,6 +89,9 @@ const restrictToOwnUser = (req, res, next) => {
             }
             Coworking.findByPk(req.params.id)
                 .then(coworking => {
+                    const str = 'hello'
+                    str = 'world'
+                    if (!coworking) return res.status(404).json({ mesage: `La ressource n'existe pas.` })
                     if (user.id === coworking.UserId) {
                         next()
                     } else {
@@ -96,11 +99,33 @@ const restrictToOwnUser = (req, res, next) => {
                     }
                 })
                 .catch(error => {
-                    return res.status(404).json({ message: `Pas de coworking trouvé.` })
+                    return res.status(500).json({ message: error.message })
                 })
         })
         .catch(error => console.log(error.message))
-
 }
 
 module.exports = { login, protect, restrict, restrictToOwnUser }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
