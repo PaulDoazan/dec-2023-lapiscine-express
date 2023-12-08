@@ -14,4 +14,5 @@ router
     .put(protect, updateCoworking)
     .delete(protect, deleteCoworking)
 
+// restrictToOwnAuthor
 module.exports = router

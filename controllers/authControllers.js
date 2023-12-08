@@ -75,4 +75,11 @@ const restrict = (req, res, next) => {
         })
 }
 
+// Implémenter le middleware qui sera utilisé sur updateCoworking et deleteCoworking, qui permmettra d'interagir sur la ressource seulement si on en est l'auteur. Si ce n'est pas le cas, on renvoie une erreur 403.
+
+// première étape, on logge dans le terminal 'restrict to own user' 
+const restrictToOwnUser = () => {
+
+}
+
 module.exports = { login, protect, restrict }
