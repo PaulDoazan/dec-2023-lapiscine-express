@@ -21,6 +21,7 @@ const login = (req, res) => {
                         data: result.username
                     }, SECRET_KEY, { expiresIn: '1h' });
 
+                    res.cookie('jwt', token)
                     res.json({ message: `Login réussi`, data: token })
                 })
                 .catch(error => {
@@ -33,11 +34,11 @@ const login = (req, res) => {
 }
 
 const protect = (req, res, next) => {
-    if (!req.headers.authorization) {
+    if (!req.cookies.jwt) {
         return res.status(401).json({ message: `Vous n'êtes pas authentifié.` })
     }
 
-    const token = req.headers.authorization.split(' ')[1]
+    const token = req.cookies.jwt
 
     if (token) {
         try {
@@ -89,9 +90,7 @@ const restrictToOwnUser = (req, res, next) => {
             }
             Coworking.findByPk(req.params.id)
                 .then(coworking => {
-                    const str = 'hello'
-                    str = 'world'
-                    if (!coworking) return res.status(404).json({ mesage: `La ressource n'existe pas.` })
+                    if (!coworking) return res.status(404).json({ message: `La ressource n'existe pas.` })
                     if (user.id === coworking.UserId) {
                         next()
                     } else {
