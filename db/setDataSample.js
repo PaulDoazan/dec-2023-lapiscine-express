@@ -17,7 +17,7 @@ const setUsers = (User) => {
     return Promise.all(mockUsers.map(user => {
         return bcrypt.hash(user.password, 10)
             .then(hashResult => {
-                User.create({ ...user, password: hashResult })
+                return User.create({ ...user, password: hashResult })
                     .then(() => { })
                     .catch((error) => {
                         console.log(error.message)
