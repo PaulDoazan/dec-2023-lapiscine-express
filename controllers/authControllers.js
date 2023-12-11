@@ -21,6 +21,7 @@ const login = (req, res) => {
                         data: result.username
                     }, SECRET_KEY, { expiresIn: '1h' });
 
+                    // Possibilité de stocker le jwt dans un cookie côté client
                     res.cookie('coworkingapi_jwt', token)
                     res.json({ message: `Login réussi`, data: token })
                 })
@@ -35,17 +36,18 @@ const login = (req, res) => {
 
 const protect = (req, res, next) => {
     // console.log(req.headers)
-    // if (!req.headers.authorization) {
-    //     return res.status(401).json({ message: `Vous n'êtes pas authentifié.` })
-    // }
-
-    // const token = req.headers.authorization.split(' ')[1]
-
-    if (!req.cookies.coworkingapi_jwt) {
+    if (!req.headers.authorization) {
         return res.status(401).json({ message: `Vous n'êtes pas authentifié.` })
     }
 
-    const token = req.cookies.coworkingapi_jwt
+    const token = req.headers.authorization.split(' ')[1]
+
+    // Possibilité de stocker le jwt dans un cookie côté client
+    // if (!req.cookies.coworkingapi_jwt) {
+    //     return res.status(401).json({ message: `Vous n'êtes pas authentifié.` })
+    // }
+
+    // const token = req.cookies.coworkingapi_jwt
 
     if (token) {
         try {

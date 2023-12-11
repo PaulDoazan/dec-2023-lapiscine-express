@@ -1,5 +1,3 @@
-const { User } = require("../db/sequelizeSetup");
-
 // on définit le model coworking qui se traduira par une table avec ses champs dans la BDD
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('Coworking', {
