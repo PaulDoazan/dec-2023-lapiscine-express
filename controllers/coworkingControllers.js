@@ -1,9 +1,10 @@
 // const { Op } = require('sequelize')
 const { UniqueConstraintError, ValidationError } = require('sequelize')
-const { Coworking, User } = require('../db/sequelizeSetup')
+const { Coworking, User, Review } = require('../db/sequelizeSetup')
 
 const findAllCoworkings = (req, res) => {
-    Coworking.findAll()
+    // paramètre optionnel qui permet d'ajouter les données relatives aux commentaires d'un coworking
+    Coworking.findAll({ include: Review })
         .then((results) => {
             res.json(results)
         })
@@ -27,7 +28,6 @@ const findCoworkingByPk = (req, res) => {
 }
 
 const createCoworking = (req, res) => {
-    // Ajouter foreignKey UserId sur le coworking de façon automatique, en se basant sur l'authenification précédente dans le middleware protect
     User.findOne({ where: { username: req.username } })
         .then(user => {
             if (!user) {
