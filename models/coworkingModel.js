@@ -49,6 +49,9 @@ module.exports = (sequelize, DataTypes) => {
                     msg: "La superficie doit être un entier."
                 }
             }
+        },
+        imageUrl: {
+            type: DataTypes.STRING
         }
     }
     );
