@@ -22,7 +22,7 @@ const login = (req, res) => {
                     }, SECRET_KEY, { expiresIn: '1h' });
 
                     // Possibilité de stocker le jwt dans un cookie côté client
-                    res.cookie('coworkingapi_jwt', token)
+                    // res.cookie('coworkingapi_jwt', token)
                     res.json({ message: `Login réussi`, data: token })
                 })
                 .catch(error => {
@@ -35,7 +35,6 @@ const login = (req, res) => {
 }
 
 const protect = (req, res, next) => {
-    // console.log(req.headers)
     if (!req.headers.authorization) {
         return res.status(401).json({ message: `Vous n'êtes pas authentifié.` })
     }

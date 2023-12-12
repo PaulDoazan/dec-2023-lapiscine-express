@@ -8,7 +8,7 @@ const port = 3000
 
 app.use(express.json())
 app.use(morgan('dev'))
-app.use(cookieParser())
+// app.use(cookieParser())
 
 app.get('/', (req, res) => {
     // Exemple d'un cookie de première visite d'un site

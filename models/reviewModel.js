@@ -8,8 +8,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
-                min: 0,
-                max: 5,
+                min: {
+                    msg: `La note ne peut pas être inférieure à 0`,
+                    args: [0]
+                },
+                max: {
+                    msg: `La note ne peut pas être supérieure à 5`,
+                    args: [5]
+                }
             }
         }
     })
