@@ -1,4 +1,4 @@
-const { User, Role, Coworking } = require('../db/sequelizeSetup')
+const { User, Role } = require('../db/sequelizeSetup')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const SECRET_KEY = require('../configs/tokenData')
@@ -96,17 +96,24 @@ const restrictToOwnUser = (model) => {
                 if (!user) {
                     return res.status(404).json({ message: `Pas d'utilisateur trouvé.` })
                 }
-                model.findByPk(req.params.id)
-                    .then(coworking => {
-                        if (!coworking) return res.status(404).json({ message: `La ressource n'existe pas.` })
-                        if (user.id === coworking.UserId) {
-                            next()
-                        } else {
-                            res.status(403).json({ message: `Vous n'êtes pas l'auteur de la ressource.` })
+                // on teste d'abord si le user est admin
+                return Role.findByPk(user.RoleId)
+                    .then(role => {
+                        if (role.label === 'admin') {
+                            return next()
                         }
-                    })
-                    .catch(error => {
-                        return res.status(500).json({ message: error.message })
+                        model.findByPk(req.params.id)
+                            .then(coworking => {
+                                if (!coworking) return res.status(404).json({ message: `La ressource n'existe pas.` })
+                                if (user.id === coworking.UserId) {
+                                    next()
+                                } else {
+                                    res.status(403).json({ message: `Vous n'êtes pas l'auteur de la ressource.` })
+                                }
+                            })
+                            .catch(error => {
+                                return res.status(500).json({ message: error.message })
+                            })
                     })
             })
             .catch(error => console.log(error.message))
