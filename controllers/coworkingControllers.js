@@ -14,7 +14,7 @@ const findAllCoworkings = (req, res) => {
 }
 
 const findAllCoworkingsRawSQL = (req, res) => {
-    sequelize.query("SELECT name,rating FROM coworkings LEFT JOIN reviews ON coworkings.id = reviews.CoworkingId", { type: QueryTypes.SELECT })
+    sequelize.query("SELECT name, rating FROM coworkings LEFT JOIN reviews ON coworkings.id = reviews.CoworkingId", { type: QueryTypes.SELECT })
         .then((results) => {
             res.json(results)
         })

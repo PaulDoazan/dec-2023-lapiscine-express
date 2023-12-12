@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const { findAllReviews, findReviewByPk, createReview, updateReview, deleteReview } = require('../controllers/reviewControllers')
-const { protect, restrict } = require('../controllers/authControllers')
+const { protect, restrictToOwnUser } = require('../controllers/authControllers')
+const { Review } = require('../db/sequelizeSetup')
 
 router
     .route('/')
@@ -11,7 +12,7 @@ router
 router
     .route('/:id')
     .get(findReviewByPk)
-// .put(updateReview)
-// .delete(protect, restrict, deleteReview)
+    .put(protect, restrictToOwnUser(Review), updateReview)
+    .delete(protect, restrictToOwnUser(Review), deleteReview)
 
-module.exports = router
+module.exports = router 
