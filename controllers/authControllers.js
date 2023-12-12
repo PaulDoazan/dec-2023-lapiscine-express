@@ -49,6 +49,7 @@ const protect = (req, res, next) => {
 
     // const token = req.cookies.coworkingapi_jwt
 
+
     if (token) {
         try {
             const decoded = jwt.verify(token, SECRET_KEY);
