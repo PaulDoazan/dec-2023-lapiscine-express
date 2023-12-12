@@ -13,6 +13,17 @@ const findAllCoworkings = (req, res) => {
         })
 }
 
+const findAllCoworkingsRawSQL = (req, res) => {
+    // paramètre optionnel qui permet d'ajouter les données relatives aux commentaires d'un coworking
+    Coworking.findAll({ include: Review })
+        .then((results) => {
+            res.json(results)
+        })
+        .catch(error => {
+            res.status(500).json(error.message)
+        })
+}
+
 const findCoworkingByPk = (req, res) => {
     Coworking.findByPk((parseInt(req.params.id)))
         .then((result) => {
@@ -93,4 +104,4 @@ const deleteCoworking = (req, res) => {
         })
 }
 
-module.exports = { findAllCoworkings, findCoworkingByPk, createCoworking, updateCoworking, deleteCoworking }
+module.exports = { findAllCoworkings, findCoworkingByPk, createCoworking, updateCoworking, deleteCoworking, findAllCoworkingsRawSQL }
