@@ -89,7 +89,7 @@ const updateCoworking = (req, res) => {
     Coworking.findByPk(req.params.id)
         .then((result) => {
             if (result) {
-                return result.update(req.body)
+                return result.update({ ...req.body, imageUrl: `${req.protocol}://${req.get('host')}/api/images/${req.file.filename}` })
                     .then(() => {
                         res.status(201).json({ message: 'Le coworking a bien été mis à jour.', data: result })
                     })
@@ -106,7 +106,23 @@ const updateCoworking = (req, res) => {
 }
 
 const updateCoworkingWithImg = (req, res) => {
-    res.json('update Coworking with Img')
+    Coworking.findByPk(req.params.id)
+        .then((result) => {
+            if (result) {
+                return result.update(req.body)
+                    .then(() => {
+                        res.status(201).json({ message: 'Le coworking a bien été mis à jour.', data: result })
+                    })
+            } else {
+                res.status(404).json({ message: `Aucun coworking à mettre à jour n'a été trouvé.` })
+            }
+        })
+        .catch(error => {
+            if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
+                return res.status(400).json({ message: error.message })
+            }
+            res.status(500).json({ message: 'Une erreur est survenue.', data: error.message })
+        })
 }
 
 const deleteCoworking = (req, res) => {

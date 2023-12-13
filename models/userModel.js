@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     }, {
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
     }
     );
 }

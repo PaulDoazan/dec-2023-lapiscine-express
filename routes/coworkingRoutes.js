@@ -16,7 +16,7 @@ router
 
 router
     .route('/withImg/:id')
-    .put(protect, restrictToOwnUser(Coworking), updateCoworkingWithImg)
+    .put(protect, restrictToOwnUser(Coworking), multer, updateCoworkingWithImg)
 
 router
     .route('/rawsql')
