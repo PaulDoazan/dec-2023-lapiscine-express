@@ -4,7 +4,7 @@
   "description": "learn express",
   "main": "app.js",
   "scripts": {
-    "start": "npx nodemon app.js --trace-warnings"
+    "start": "npx nodemon app.js"
   },
   "author": "Paul Doazan",
   "license": "ISC",
