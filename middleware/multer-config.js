@@ -14,7 +14,6 @@ const fct = (dataType) => {
         },
         filename: (req, file, callback) => {
             const name = req.body.name.toLowerCase() || file.originalname.split(' ').join('_');
-            console.log(file.mimetype);
             const extension = MIME_TYPES[file.mimetype];
 
             callback(null, name + '.' + extension);

@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'production') {
     )
 } else {
     sequelize = new Sequelize(
-        'bordeaux_coworking',
+        'bordeaux_coworkings',
         'root',
         '',
         {
