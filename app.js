@@ -1,14 +1,14 @@
 const express = require('express')
 const morgan = require('morgan')
-const cookieParser = require('cookie-parser')
-const path = require('path')
+const cors = require('cors')
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 // const { sequelize } = require('./db/sequelizeSetup')
 
+app.use(cors())
 app.use(express.json())
-app.use(morgan('dev'))
+// app.use(morgan('dev'))
 // app.use(cookieParser())
 
 app.get('/', (req, res) => {
@@ -33,7 +33,7 @@ app.use('/api/coworkings', coworkingRouter)
 app.use('/api/users', userRouter)
 app.use('/api/reviews', reviewRouter)
 
-app.use('/images', express.static(__dirname + '/images'));
+app.use('/uploadedFiles', express.static(__dirname + '/uploadedFiles'));
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

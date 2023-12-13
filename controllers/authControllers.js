@@ -18,7 +18,7 @@ const login = (req, res) => {
                 return res.status(404).json({ message: `Le nom d'utilisateur n'existe pas.` })
             }
 
-            bcrypt.compare(req.body.password, result.password)
+            return bcrypt.compare(req.body.password, result.password)
                 .then((isValid) => {
                     if (!isValid) {
                         return res.status(401).json({ message: `Le mot de passe n'est pas valide.` })
@@ -30,9 +30,6 @@ const login = (req, res) => {
                     // Possibilité de stocker le jwt dans un cookie côté client
                     // res.cookie('coworkingapi_jwt', token)
                     res.json({ message: `Login réussi`, data: token })
-                })
-                .catch(error => {
-                    console.log(error.message)
                 })
         })
         .catch((error) => {
