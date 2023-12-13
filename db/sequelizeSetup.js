@@ -53,7 +53,7 @@ Review.belongsTo(Coworking)
 // Coworking.belongsToMany(Customer, { through: Registration });
 // Customer.belongsToMany(Coworking, { through: Registration });
 
-sequelize.sync({ force: true })
+sequelize.sync()
     .then(async () => {
         await setRoles(Role)
         await setUsers(User)
