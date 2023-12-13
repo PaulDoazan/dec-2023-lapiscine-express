@@ -67,7 +67,7 @@ const createCoworkingWithImg = (req, res) => {
             if (!user) {
                 return res.status(404).json({ message: `L'utilisateur n'a pas été trouvé.` })
             }
-            const newCoworking = { ...req.body, UserId: user.id, imageUrl: `${req.protocol}://${req.get('host')}/api/images/${req.file.filename}` }
+            const newCoworking = { ...req.body, UserId: user.id, imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` }
 
             Coworking.create(newCoworking)
                 .then((coworking) => {
@@ -89,7 +89,7 @@ const updateCoworking = (req, res) => {
     Coworking.findByPk(req.params.id)
         .then((result) => {
             if (result) {
-                return result.update({ ...req.body, imageUrl: `${req.protocol}://${req.get('host')}/api/images/${req.file.filename}` })
+                return result.update({ ...req.body, imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` })
                     .then(() => {
                         res.status(201).json({ message: 'Le coworking a bien été mis à jour.', data: result })
                     })
