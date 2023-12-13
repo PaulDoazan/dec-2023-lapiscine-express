@@ -1,4 +1,3 @@
-const sequelizeNoUpdateAttributes = require('sequelize-noupdate-attributes');
 const CoworkingModel = require('../models/coworkingModel')
 const UserModel = require('../models/userModel')
 const RoleModel = require('../models/roleModel')
@@ -13,8 +12,6 @@ const sequelize = new Sequelize('bordeaux_coworkings', 'root', '', {
     dialect: 'mariadb',
     logging: false
 });
-
-sequelizeNoUpdateAttributes(sequelize)
 
 const Role = RoleModel(sequelize, DataTypes)
 const User = UserModel(sequelize, DataTypes)
