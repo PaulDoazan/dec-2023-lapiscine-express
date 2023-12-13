@@ -62,13 +62,12 @@ const createCoworking = (req, res) => {
 }
 
 const createCoworkingWithImg = (req, res) => {
-    console.log(req.body)
     User.findOne({ where: { username: req.username } })
         .then(user => {
             if (!user) {
                 return res.status(404).json({ message: `L'utilisateur n'a pas été trouvé.` })
             }
-            const newCoworking = { ...req.body, UserId: user.id, imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` }
+            const newCoworking = { ...req.body, UserId: user.id, imageUrl: `${req.protocol}://${req.get('host')}/api/images/${req.file.filename}` }
 
             Coworking.create(newCoworking)
                 .then((coworking) => {
@@ -106,6 +105,10 @@ const updateCoworking = (req, res) => {
         })
 }
 
+const updateCoworkingWithImg = (req, res) => {
+    res.json('update Coworking with Img')
+}
+
 const deleteCoworking = (req, res) => {
     // A. On vérifie que l'id passé en req.params.id renvoie bien une ligne de notre table.
     Coworking.findByPk(req.params.id)
@@ -128,4 +131,4 @@ const deleteCoworking = (req, res) => {
         })
 }
 
-module.exports = { findAllCoworkings, findCoworkingByPk, createCoworking, updateCoworking, deleteCoworking, findAllCoworkingsRawSQL, createCoworkingWithImg }
+module.exports = { findAllCoworkings, findCoworkingByPk, createCoworking, updateCoworking, deleteCoworking, findAllCoworkingsRawSQL, createCoworkingWithImg, updateCoworkingWithImg }

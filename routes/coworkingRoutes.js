@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { findAllCoworkings, findCoworkingByPk, createCoworking, updateCoworking, deleteCoworking, findAllCoworkingsRawSQL, createCoworkingWithImg } = require('../controllers/coworkingControllers')
+const { findAllCoworkings, findCoworkingByPk, createCoworking, updateCoworking, deleteCoworking, findAllCoworkingsRawSQL, createCoworkingWithImg, updateCoworkingWithImg } = require('../controllers/coworkingControllers')
 const { protect, restrictToOwnUser } = require('../controllers/authControllers')
 const { Coworking } = require('../db/sequelizeSetup')
 const multer = require('../middleware/multer-config');
@@ -13,6 +13,10 @@ router
 router
     .route('/withImg')
     .post(protect, multer, createCoworkingWithImg)
+
+router
+    .route('/withImg/:id')
+    .put(protect, restrictToOwnUser(Coworking), updateCoworkingWithImg)
 
 router
     .route('/rawsql')
