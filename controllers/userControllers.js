@@ -31,6 +31,7 @@ const createUser = (req, res) => {
         .then((hash) => {
             User.create({ ...req.body, password: hash })
                 .then((user) => {
+                    user.password = ""
                     res.status(201).json({ message: `L'utilisateur a bien été créé`, data: user })
                 })
                 .catch((error) => {

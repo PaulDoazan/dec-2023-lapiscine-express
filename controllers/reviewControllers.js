@@ -2,7 +2,7 @@ const { ValidationError } = require('sequelize')
 const { Review, User } = require('../db/sequelizeSetup')
 
 const findAllReviews = (req, res) => {
-    Review.findAll()
+    Review.findAll({ include: User })
         .then(result => {
             res.json(result)
         })

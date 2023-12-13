@@ -4,7 +4,7 @@ const { Coworking, User, Review, sequelize } = require('../db/sequelizeSetup')
 
 const findAllCoworkings = (req, res) => {
     // paramètre optionnel qui permet d'ajouter les données relatives aux commentaires d'un coworking
-    Coworking.findAll({ include: Review })
+    Coworking.findAll({ include: [Review, User] })
         .then((results) => {
             res.json(results)
         })
@@ -89,7 +89,7 @@ const updateCoworking = (req, res) => {
     Coworking.findByPk(req.params.id)
         .then((result) => {
             if (result) {
-                return result.update({ ...req.body, imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` })
+                return result.update(req.body)
                     .then(() => {
                         res.status(201).json({ message: 'Le coworking a bien été mis à jour.', data: result })
                     })
@@ -109,7 +109,7 @@ const updateCoworkingWithImg = (req, res) => {
     Coworking.findByPk(req.params.id)
         .then((result) => {
             if (result) {
-                return result.update(req.body)
+                return result.update({ ...req.body, imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` })
                     .then(() => {
                         res.status(201).json({ message: 'Le coworking a bien été mis à jour.', data: result })
                     })
