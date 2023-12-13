@@ -107,7 +107,7 @@ const restrictToOwnUser = (model) => {
                 // on teste d'abord si le user est admin
                 return Role.findByPk(user.RoleId)
                     .then(role => {
-                        if (role.label === 'admin') {
+                        if (rolesHierarchy[role.label].includes('admin')) {
                             return next()
                         }
                         model.findByPk(req.params.id)
