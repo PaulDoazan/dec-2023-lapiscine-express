@@ -128,7 +128,37 @@ const restrictToOwnUser = (model) => {
     }
 }
 
-module.exports = { login, protect, restrict, restrictToOwnUser }
+const correctUser = (req, res, next) => {
+    User.findOne({ where: { username: req.username } })
+        .then(authUser => {
+            console.log(authUser.id, parseInt(req.params.id))
+            if (authUser.id === parseInt(req.params.id)) {
+                next()
+            } else {
+                res.status(403).json({ message: "Droits insuffisants." })
+            }
+            // Role.findByPk(authUser.RoleId)
+            //     .then(role => {
+            //         // if (rolesHierarchy[role.label].includes('admin')) {
+            //         //     return next()
+            //         // }
+
+            //         if (authUser.id === req.params.id) {
+            //             next()
+            //         } else {
+            //             res.status(403).json({ message: "Droits insuffisants." })
+            //         }
+            //     })
+        })
+        .catch(error => {
+            res.status(500).json({ message: error.message })
+        })
+    // if (result.id !== req.params.id) {
+    //     return res.status(403).json({ message: 'Droits insuffisants.' })
+    // }
+}
+
+module.exports = { login, protect, restrict, restrictToOwnUser, correctUser }
 
 
 
