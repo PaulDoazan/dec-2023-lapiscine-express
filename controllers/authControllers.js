@@ -62,8 +62,8 @@ const protect = (req, res, next) => {
     }
 }
 
-// Ajouter le paramètre labelRole
-const restrict = (labelRole) => {
+// Ajouter le paramètre roleParam
+const restrict = (roleParam) => {
     return (req, res, next) => {
         User.findOne({
             where: {
@@ -73,7 +73,9 @@ const restrict = (labelRole) => {
             .then(user => {
                 Role.findByPk(user.RoleId)
                     .then(role => {
-                        if (rolesHierarchy[role.label].includes(labelRole)) {
+                        // role.label est le rôle issu du token
+                        // roleParam est le paramètre de la fonction restrict()
+                        if (rolesHierarchy[role.label].includes(roleParam)) {
                             next()
                         } else {
                             res.status(403).json({ message: `Droits insuffisants` })

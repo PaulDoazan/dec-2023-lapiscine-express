@@ -12,11 +12,11 @@ router
 
 router
     .route('/withImg')
-    .post(protect, multer('image'), createCoworkingWithImg)
+    .post(protect, multer, createCoworkingWithImg)
 
 router
     .route('/withImg/:id')
-    .put(protect, restrictToOwnUser(Coworking), multer('file'), updateCoworkingWithImg)
+    .put(protect, restrictToOwnUser(Coworking), multer, updateCoworkingWithImg)
 
 router
     .route('/rawsql')

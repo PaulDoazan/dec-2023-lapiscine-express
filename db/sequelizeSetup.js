@@ -6,30 +6,17 @@ const { setCoworkings, setUsers, setRoles, setCustomers, setRegistrations } = re
 const reviewModel = require('../models/reviewModel');
 // const customerModel = require('../models/customerModel');
 // const registrationModel = require('../models/registrationModel');
-let sequelize
-if (process.env.NODE_ENV === 'production') {
-    sequelize = new Sequelize(
-        'ane3bxmhfxw5zemp',
-        'hyefimodv25gkgg2',
-        'so39fjrqfar2we2o',
-        {
-            host: 'un0jueuv2mam78uv.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-            dialect: 'mariadb',
-            logging: false
-        }
-    )
-} else {
-    sequelize = new Sequelize(
-        'bordeaux_coworkings',
-        'root',
-        '',
-        {
-            host: 'localhost',
-            dialect: 'mariadb',
-            logging: false
-        }
-    )
-}
+let sequelize = new Sequelize(
+    'bordeaux_coworkings',
+    'root',
+    '',
+    {
+        host: 'localhost',
+        dialect: 'mariadb',
+        logging: false
+    }
+)
+//
 
 const Role = RoleModel(sequelize, DataTypes)
 const User = UserModel(sequelize, DataTypes)
@@ -53,7 +40,7 @@ Review.belongsTo(Coworking)
 // Coworking.belongsToMany(Customer, { through: Registration });
 // Customer.belongsToMany(Coworking, { through: Registration });
 
-sequelize.sync()
+sequelize.sync({ force: true })
     .then(async () => {
         await setRoles(Role)
         await setUsers(User)
@@ -72,3 +59,27 @@ sequelize.authenticate()
 
 
 module.exports = { Coworking, User, Role, Review, sequelize }
+
+// if (process.env.NODE_ENV === 'production') {
+//     sequelize = new Sequelize(
+//         'ane3bxmhfxw5zemp',
+//         'hyefimodv25gkgg2',
+//         'so39fjrqfar2we2o',
+//         {
+//             host: 'un0jueuv2mam78uv.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+//             dialect: 'mariadb',
+//             logging: false
+//         }
+//     )
+// } else {
+//     sequelize = new Sequelize(
+//         'bordeaux_coworkings',
+//         'root',
+//         '',
+//         {
+//             host: 'localhost',
+//             dialect: 'mariadb',
+//             logging: false
+//         }
+//     )
+// }
