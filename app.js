@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000
 // const { sequelize } = require('./db/sequelizeSetup')
 
 app.use(cors())
-app.use(bodyparser.urlencoded({ extended: true }));
+app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 // app.use(morgan('dev'))
 // app.use(cookieParser())
