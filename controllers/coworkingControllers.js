@@ -67,7 +67,7 @@ const createCoworkingWithImg = (req, res) => {
             if (!user) {
                 return res.status(404).json({ message: `L'utilisateur n'a pas été trouvé.` })
             }
-            console.log(req.file, req)
+            console.log(req.file)
             const newCoworking = { ...req.body, UserId: user.id, imageUrl: `${req.protocol}://${req.get('host')}/uploadedFiles/${req.file.filename}` }
 
             Coworking.create(newCoworking)
