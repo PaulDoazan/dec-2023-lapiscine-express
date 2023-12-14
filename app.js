@@ -1,5 +1,6 @@
 const express = require('express')
 // const morgan = require('morgan')
+const bodyparser = require('body-parser');
 const cors = require('cors')
 const app = express()
 const port = process.env.PORT || 3000
@@ -7,7 +8,8 @@ const port = process.env.PORT || 3000
 // const { sequelize } = require('./db/sequelizeSetup')
 
 app.use(cors())
-app.use(express.json())
+app.use(bodyparser.urlencoded({ extended: true }));
+app.use(bodyparser.json());
 // app.use(morgan('dev'))
 // app.use(cookieParser())
 
