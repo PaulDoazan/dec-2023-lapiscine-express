@@ -1,10 +1,9 @@
 const express = require('express')
-const morgan = require('morgan')
+// const morgan = require('morgan')
 const app = express()
 const port = process.env.PORT || 3000
 
 // const { sequelize } = require('./db/sequelizeSetup')
-
 app.use(express.json())
 // app.use(morgan('dev'))
 // app.use(cookieParser())
